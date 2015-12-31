@@ -102,9 +102,10 @@ int main()
   // Domain
   Mesh_domain domain(image);
 
+  // Something to do with cell size...
   Sizing_field size(8);
 
-  // Mesh criteria
+  // Mesh criteria - can be experimented with...
   Mesh_criteria criteria(facet_angle=30, facet_size=6, facet_distance=2,
                          cell_radius_edge_ratio=3, cell_size=size);
   // Meshing
