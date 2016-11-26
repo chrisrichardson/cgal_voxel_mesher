@@ -5,8 +5,7 @@
 # Require CMake 2.8
 cmake_minimum_required(VERSION 2.8)
 
-set(CMAKE_CXX_FLAGS "-std=c++11")
-set(PROJECT_NAME muntjac_mesh)
+set(PROJECT_NAME voxel_mesher)
 project(${PROJECT_NAME})
 
 # Set verbose output while testing CMake
@@ -23,7 +22,7 @@ list(APPEND CMAKE_MODULE_PATH "${CGAL_DIR}")
 find_package(CGAL)
 find_package(GMP)
 find_package(MPFR)
-find_package(Boost COMPONENTS filesystem)
+find_package(Boost COMPONENTS filesystem program_options)
 
 # Default build type (can be overridden by user)
 if (NOT CMAKE_BUILD_TYPE)
@@ -31,20 +30,12 @@ if (NOT CMAKE_BUILD_TYPE)
     "Choose the type of build, options are: Debug MinSizeRel Release RelWithDebInfo." FORCE)
 endif()
 
-# Compiler definitions
-# add_definitions(${DOLFIN_CXX_DEFINITIONS})
-
-# Compiler flags
-# set(CMAKE_CXX_FLAGS "${DOLFIN_CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
-
-# Include directories
-# include_directories(${DOLFIN_INCLUDE_DIRS})
-# include_directories(SYSTEM ${DOLFIN_3RD_PARTY_INCLUDE_DIRS})
+set(CMAKE_CXX_FLAGS "-std=c++11")
 
 # Executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp cgal.cpp raw.cpp tiff.cpp)
 
 # Target libraries
-target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY_RELEASE} 
-  ${CGAL_LIBRARY} ${CGAL_ImageIO_LIBRARY} 
+target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY_RELEASE}
+  ${CGAL_LIBRARY} ${CGAL_ImageIO_LIBRARY}
   ${CGAL_3RD_PARTY_LIBRARIES} ${GMP_LIBRARIES} ${MPFR_LIBRARIES} ${TIFF_LIBRARY})
