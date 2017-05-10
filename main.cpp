@@ -14,6 +14,8 @@
 //
 // Output is in the "medit" format, as this is what CGAL produces. It can be converted to other
 // formats using "meshio" or another similar tool.
+//
+//
 
 #include "cgal.h"
 #include "raw.h"
@@ -38,7 +40,8 @@ int main(int argc, char *argv[])
     ("help,h", "describe arguments")
     ("input,i", po::value<std::string>()->required(), "voxel data file (in .dat or .tif format)")
     ("key,k", po::value<int>(), "Pixel value to use as a key (e.g. for segmented image)")
-    ("threshold,t", po::value<int>(), "Pixel value to threshold from (i.e. values above are solid, use negative value to set values below as solid)");
+    ("threshold,t", po::value<int>(), "Pixel value to threshold from (i.e. values above are solid, use negative value to set values below as solid)")
+    ("size,s", po::value<int>(), "Cell sizing, as defined by CGAL");
 
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -66,7 +69,14 @@ int main(int argc, char *argv[])
   if (vm.count("threshold"))
   {
     threshold = vm["threshold"].as<int>();
-    std::cout << "threshold = " << vm["threshold"].as<int>() << "\n";
+    std::cout << "threshold = " << threshold << "\n";
+  }
+
+  int cell_size = 4;
+  if (vm.count("size"))
+  {
+    cell_size = vm["size"].as<int>();
+    std::cout << "cell_size = " << cell_size << "\n";
   }
 
   // Required input filename
@@ -83,7 +93,7 @@ int main(int argc, char *argv[])
   if (format == "dat")
     read_raw(filename, image);
   else if (format == "tif")
-    load_tif(filename, image);
+    read_tif(filename, image);
   else
     throw std::runtime_error("format not supported");
 
@@ -114,13 +124,13 @@ int main(int argc, char *argv[])
     {
       if (threshold > 0)
         *p = (*p > threshold) ? 255 : 0;
-      else:
+      else
         *p = (*p > -threshold) ? 0 : 255;
       ++p;
     }
   }
 
-  cgal_make_mesh(image, "out.mesh", 1);
+  cgal_make_mesh(image, "out.mesh", cell_size);
 
   return 0;
 }

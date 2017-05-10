@@ -1,3 +1,10 @@
+// voxel_mesher
+//
+// Copyright 2017 Chris Richardson
+//
+// This software is licenced under the Gnu LGPLv3 https://www.gnu.org/licenses/lgpl-3.0
+//
+
 #define CGAL_MESH_3_VERBOSE
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Mesh_triangulation_3.h>
@@ -42,8 +49,10 @@ void cgal_make_mesh(const CGAL::Image_3& image, std::string filename,
   // Mesh criteria - can be experimented with...
   Mesh_criteria criteria(facet_angle=30, facet_size=6, facet_distance=2,
                          cell_radius_edge_ratio=3, cell_size=size);
+
   // Meshing
   C3t3 c3t3 = CGAL::make_mesh_3<C3t3>(domain, criteria);
+
   // Output
   std::ofstream medit_file(filename);
   c3t3.output_to_medit(medit_file);

@@ -1,9 +1,9 @@
 #!/usr/bin/python
 from dolfin import *
-import subprocess
+# import subprocess
 import numpy
 
-subprocess.call(["dolfin-convert", "out.mesh", "out.xml"])
+# subprocess.call(["python3", "dolfin-convert", "out.mesh", "out.xml"])
 
 mesh = Mesh("out.xml")
 
@@ -60,7 +60,7 @@ mesh2 = Mesh()
 ed = MeshEditor()
 ed.open(mesh2, 3, 3)
 
-print cell_count
+print(cell_count)
 ed.init_cells(cell_count)
 cc = 0
 for c in cells(mesh):
@@ -78,8 +78,8 @@ for i in range(len(idx_list)):
         ed.add_vertex(vc, Vertex(mesh, i).point())
         vc += 1
 
-print cc, cell_count
-print vc, vertex_count
+print(cc, cell_count)
+print(vc, vertex_count)
 ed.close()
 
 xdmf = XDMFFile("out.xdmf")

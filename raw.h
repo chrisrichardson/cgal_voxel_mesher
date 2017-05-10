@@ -1,3 +1,5 @@
+#ifndef _VOXELMESHER_RAW_H
+#define _VOXELMESHER_RAW_H
 
 #include <CGAL/Image_3.h>
 #include <string>
@@ -8,3 +10,5 @@
 // Output: CGAL::Image_3
 //
 void read_raw(const std::string filename, CGAL::Image_3& image);
+
+#endif

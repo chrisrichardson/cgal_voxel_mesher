@@ -1,3 +1,9 @@
+// voxel_mesher
+//
+// Copyright 2017 Chris Richardson
+//
+// This software is licenced under the Gnu LGPLv3 https://www.gnu.org/licenses/lgpl-3.0
+
 #include "tiff.h"
 
 #include <CGAL/Image_3.h>

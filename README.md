@@ -3,8 +3,22 @@
 This is a simple code to convert a voxel mesh in tiff format to a tetrahedral mesh.
 
 
-The main code is configured with cmake. Needs libtiff and CGAL.
+The main code is configured with cmake. Needs libtiff, boost and CGAL.
 
 
-The output is in `.mesh` format which is a bit obscure. To convert to dolfin format (using dolfin-convert), you will
-have to edit it a bit. The line "Dimension 3" has to be replaced with "Dimension" (newline) "3" (newline). And all triangles will need to be deleted. This is annoying, and should be fixed in dolfin-convert
+The output is in `.mesh` format which is a bit obscure, but can be converted with `dolfin-convert` and
+`meshio`. It is not guaranteed that the output will be a good quality mesh, or even properly connected.
+You will have to do some checks, diagnostics and corrections to be sure.
+
+Usage:
+```
+voxel_mesher --help
+Allowed options:
+  -h [ --help ]          describe arguments
+  -i [ --input ] arg     voxel data file (in .dat or .tif format)
+  -k [ --key ] arg       Pixel value to use as a key (e.g. for segmented image)
+  -t [ --threshold ] arg Pixel value to threshold from (i.e. values above are
+                         solid, use negative value to set values below as
+	                 solid)
+  -s [ --size ] arg      Cell sizing, as defined by CGAL
+```
