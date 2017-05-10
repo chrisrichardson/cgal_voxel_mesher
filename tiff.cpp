@@ -9,7 +9,7 @@
 #include <string>
 
 //-----------------------------------------------------------------------------
-void load_tif(const std::string filename, CGAL::Image_3& image)
+void read_tif(const std::string filename, CGAL::Image_3& image)
 {
 
   TIFF* tif = TIFFOpen(filename.c_str(), "r");
@@ -46,7 +46,7 @@ void load_tif(const std::string filename, CGAL::Image_3& image)
   int nx = w, ny = h, nz = ndir;
   double vx = 1.0, vy = 1.0, vz = 1.0;
 
-  std::cout << nx << "x" << ny << "x" << nz << std::endl;
+  std::cout << "Got tiff: " << nx << "x" << ny << "x" << nz << std::endl;
 
   image = _createImage(nx, ny, nz, 1,
                        vx, vy, vz, 1,

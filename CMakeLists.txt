@@ -36,6 +36,6 @@ set(CMAKE_CXX_FLAGS "-std=c++11")
 add_executable(${PROJECT_NAME} main.cpp cgal.cpp raw.cpp tiff.cpp)
 
 # Target libraries
-target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY_RELEASE}
+target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY_RELEASE} ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE}
   ${CGAL_LIBRARY} ${CGAL_ImageIO_LIBRARY}
   ${CGAL_3RD_PARTY_LIBRARIES} ${GMP_LIBRARIES} ${MPFR_LIBRARIES} ${TIFF_LIBRARY})
