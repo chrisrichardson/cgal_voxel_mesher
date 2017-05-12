@@ -5,10 +5,10 @@ import numpy
 
 # subprocess.call(["python3", "dolfin-convert", "out.mesh", "out.xml"])
 
-mesh = Mesh("out.xml")
+mesh = Mesh("junk.xml")
 
 xdmf = XDMFFile("mesh1.xdmf")
-xdmf.write(mesh)
+xdmf.write(mesh,XDMFFile.Encoding_ASCII)
 
 quit()
 

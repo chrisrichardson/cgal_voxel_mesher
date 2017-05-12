@@ -3,12 +3,11 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: gcc:6.1
+image: ubuntu:16.10
 
 pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - sudo apt install libcgal-dev libtiff-dev libboost-all-dev
           - cmake .
           - make

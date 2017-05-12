@@ -33,7 +33,7 @@ endif()
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
 # Executable
-add_executable(${PROJECT_NAME} main.cpp cgal.cpp raw.cpp tiff.cpp)
+add_executable(${PROJECT_NAME} main.cpp cgal.cpp raw.cpp tiff.cpp xdmf.cpp pugixml.cpp)
 
 # Target libraries
 target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY_RELEASE} ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE}

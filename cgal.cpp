@@ -37,6 +37,9 @@ using namespace CGAL::parameters;
 
 #include <CGAL/ImageIO.h>
 
+#include "cgal.h"
+#include "xdmf.h"
+
 void cgal_make_mesh(const CGAL::Image_3& image, std::string filename,
                     int cell_sizing)
 {
@@ -59,6 +62,8 @@ void cgal_make_mesh(const CGAL::Image_3& image, std::string filename,
                                       exude(0.0, 0.0));
 
   // Output
-  std::ofstream medit_file(filename);
-  c3t3.output_to_medit(medit_file);
+  std::stringstream medit_stream;
+  c3t3.output_to_medit(medit_stream);
+
+  medit_to_xdmf(medit_stream, filename);
 }

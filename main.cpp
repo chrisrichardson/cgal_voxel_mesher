@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     std::cout << "cell_size = " << cell_size << "\n";
   }
 
-  std::string out_filename = "out.mesh";
+  std::string out_filename = "out.xdmf";
   if (vm.count("output"))
   {
     out_filename = vm["output"].as<std::string>();
