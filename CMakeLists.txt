@@ -14,12 +14,10 @@ project(${PROJECT_NAME})
 # Set CMake behavior
 cmake_policy(SET CMP0004 OLD)
 
-# Get DOLFIN configuration data (DOLFINConfig.cmake must be in
-# DOLFIN_CMAKE_CONFIG_PATH)
 find_package(TIFF)
 find_package(CGAL)
 list(APPEND CMAKE_MODULE_PATH "${CGAL_DIR}")
-find_package(CGAL)
+find_package(CGAL COMPONENTS ImageIO)
 find_package(GMP)
 find_package(MPFR)
 find_package(Boost COMPONENTS filesystem program_options)
