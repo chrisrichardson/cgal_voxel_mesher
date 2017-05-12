@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
   desc.add_options()
     ("help,h", "describe arguments")
     ("input,i", po::value<std::string>()->required(), "voxel data file (in .dat or .tif format)")
+    ("output,o", po::value<std::string>(), "output mesh file (in .mesh format) - defaults to out.mesh")
     ("key,k", po::value<int>(), "Pixel value to use as a key (e.g. for segmented image)")
     ("threshold,t", po::value<int>(), "Pixel value to threshold from (i.e. values above are solid, use negative value to set values below as solid)")
     ("size,s", po::value<int>(), "Cell sizing, as defined by CGAL");
@@ -79,9 +80,16 @@ int main(int argc, char *argv[])
     std::cout << "cell_size = " << cell_size << "\n";
   }
 
+  std::string out_filename = "out.mesh";
+  if (vm.count("output"))
+  {
+    out_filename = vm["output"].as<std::string>();
+  }
+  std::cout << "output filename = " << out_filename << "\n";
+
   // Required input filename
   std::string filename = vm["input"].as<std::string>();
-  std::cout << "Filename= " << filename << "\n";
+  std::cout << "input filename = " << filename << "\n";
 
   CGAL::Image_3 image;
 
@@ -130,7 +138,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  cgal_make_mesh(image, "out.mesh", cell_size);
+  cgal_make_mesh(image, out_filename, cell_size);
 
   return 0;
 }

@@ -51,7 +51,12 @@ void cgal_make_mesh(const CGAL::Image_3& image, std::string filename,
                          cell_radius_edge_ratio=3, cell_size=size);
 
   // Meshing
-  C3t3 c3t3 = CGAL::make_mesh_3<C3t3>(domain, criteria);
+  // FIXME: put all the parameters under user control
+  C3t3 c3t3 = CGAL::make_mesh_3<C3t3>(domain, criteria,
+                                      lloyd(),
+                                      odt(),
+                                      perturb(),
+                                      exude(0.0, 0.0));
 
   // Output
   std::ofstream medit_file(filename);
