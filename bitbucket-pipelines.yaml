@@ -7,6 +7,6 @@ pipelines:
   default:
     - step:
         script:
-	  - sudo apt install libcgal-dev libboost-dev-all libtiff-dev
-	  - cmake .
-	  - make
+      - sudo apt install libcgal-dev libboost-dev-all libtiff-dev
+      - cmake .
+      - make
