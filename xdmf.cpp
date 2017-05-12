@@ -2,6 +2,7 @@
 
 #include "xdmf.h"
 
+#include <vector>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
