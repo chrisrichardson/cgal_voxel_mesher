@@ -9,6 +9,6 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - ./configure
+          - sudo apt install libcgal-dev libtiff-dev libboost-all-dev
+          - cmake .
           - make
-          - make test
