@@ -14,7 +14,7 @@
 
 void medit_to_xdmf(std::stringstream& medit_str, std::string filename)
 {
-  std::cout << medit_str.str() << "\n";
+  //  std::cout << medit_str.str() << "\n";
 
   std::string line;
 

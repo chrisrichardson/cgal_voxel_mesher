@@ -19,6 +19,7 @@ void read_raw(const std::string filename, CGAL::Image_3& image)
   std::string object_filename;
   std::string format;
   std::vector<int> res(3);
+  std::vector<double> dx = {1.0, 1.0, 1.0};
 
   while(datfile.is_open())
   {
@@ -31,37 +32,48 @@ void read_raw(const std::string filename, CGAL::Image_3& image)
       {
         std::vector<std::string> vline;
         boost::split(vline, line, boost::is_any_of(":"));
-        if (vline[0] == "ObjectFileName")
+        if(vline.size() > 0)
         {
-          boost::trim(vline[1]);
-          object_filename = vline[1];
-        }
-        else if (vline[0] == "Resolution")
-        {
-          boost::trim(vline[1]);
-          std::vector<std::string> res_str;
-          boost::split(res_str, vline[1], boost::is_any_of(" "));
-          assert(res_str.size() == 3);
-          for (int i = 0; i < 3; ++i)
-            res[i] = std::stoul(res_str[i]);
+          if (vline[0]=="ObjectFileName")
+          {
+            boost::trim(vline[1]);
+            object_filename = vline[1];
+          }
+          else if (vline[0] == "Resolution")
+          {
+            boost::trim(vline[1]);
+            std::vector<std::string> res_str;
+            boost::split(res_str, vline[1], boost::is_any_of(" "));
+            assert(res_str.size() == 3);
+            for (int i = 0; i < 3; ++i)
+              res[i] = std::stoul(res_str[i]);
+            std::cout << "Resolution:" << res[0] << "x" << res[1] << "x" << res[2] << "\n";
+          }
+          else if (vline[0] == "Format")
+          {
+            boost::trim(vline[1]);
+            format = vline[1];
+          }
+          else if (vline[0] == "SliceThickness")
+          {
+            boost::trim(vline[1]);
+            std::vector<std::string> dx_str;
+            boost::split(dx_str, vline[1], boost::is_any_of(" "));
+            assert(dx_str.size() == 3);
+            for (int i = 0; i < 3; ++i)
+              dx [i] = std::stod(dx_str[i]);
+            std::cout << "dx:" << dx[0] << "x" << dx[1] << "x" << dx[2] << "\n";
+          }
 
-          std::cout << res[0] << "x" << res[1] << "x" << res[2] << "\n";
-        }
-        else if (vline[0] == "Format")
-        {
-          boost::trim(vline[1]);
-          format = vline[1];
         }
       }
-
     }
     datfile.close();
   }
 
-  double vx = 1.0, vy = 1.0, vz = 1.0;
 
   image = _createImage(res[0], res[1], res[2], 1,
-                       vx, vy, vz, 1,
+                       dx[0], dx[1], dx[2], 1,
                        WK_FIXED, SGN_UNSIGNED);
 
   std::cout << "filename = '" << object_filename << "'\n";
