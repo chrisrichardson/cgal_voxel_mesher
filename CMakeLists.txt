@@ -3,7 +3,11 @@
 #     cmake/scripts/generate-cmakefiles
 #
 # Require CMake 2.8
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.28)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 set(PROJECT_NAME voxel_mesher)
 project(${PROJECT_NAME})
@@ -11,16 +15,15 @@ project(${PROJECT_NAME})
 # Set verbose output while testing CMake
 #set(CMAKE_VERBOSE_MAKEFILE 1)
 
-# Set CMake behavior
-cmake_policy(SET CMP0004 OLD)
 
 find_package(TIFF)
-find_package(CGAL)
-list(APPEND CMAKE_MODULE_PATH "${CGAL_DIR}")
+find_package(CGAL REQUIRED)
 find_package(CGAL COMPONENTS ImageIO)
 find_package(GMP)
 find_package(MPFR)
 find_package(Boost COMPONENTS filesystem program_options)
+
+include_directories("/opt/homebrew/include")
 
 # Default build type (can be overridden by user)
 if (NOT CMAKE_BUILD_TYPE)
