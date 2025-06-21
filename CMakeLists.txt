@@ -16,14 +16,17 @@ project(${PROJECT_NAME})
 #set(CMAKE_VERBOSE_MAKEFILE 1)
 
 
-find_package(TIFF)
+find_package(HDF5 REQUIRED)
 find_package(CGAL REQUIRED)
 find_package(CGAL COMPONENTS ImageIO)
 find_package(GMP)
+find_package(ITK REQUIRED)
 find_package(MPFR)
 find_package(Boost COMPONENTS filesystem program_options)
 
 include_directories("/opt/homebrew/include")
+include_directories("/Users/chrisrichardson/Work/packages/itk-5.4.0/include/ITK-5.4")
+include_directories("/Users/chrisrichardson/Work/packages/petsc/include")
 
 # Default build type (can be overridden by user)
 if (NOT CMAKE_BUILD_TYPE)
@@ -34,9 +37,9 @@ endif()
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
 # Executable
-add_executable(${PROJECT_NAME} main.cpp cgal.cpp raw.cpp tiff.cpp xdmf.cpp pugixml.cpp)
+add_executable(${PROJECT_NAME} main.cpp cgal.cpp raw.cpp xdmf.cpp pugixml.cpp)
 
 # Target libraries
 target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY_RELEASE} ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE}
   ${CGAL_LIBRARY} ${CGAL_ImageIO_LIBRARY}
-  ${CGAL_3RD_PARTY_LIBRARIES} ${GMP_LIBRARIES} ${MPFR_LIBRARIES} ${TIFF_LIBRARY})
+  ${CGAL_3RD_PARTY_LIBRARIES} ${GMP_LIBRARIES} ${MPFR_LIBRARIES} ${HDF5_LIBRARIES})

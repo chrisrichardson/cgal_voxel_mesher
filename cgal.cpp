@@ -57,9 +57,8 @@ using Mesh_criteria = CGAL::Mesh_criteria_3<Tr>;
 // typedef CGAL::Mesh_complex_3_in_triangulation_3<Tr> C3t3;
 // // Criteria
 // typedef CGAL::Mesh_criteria_3<Tr> Mesh_criteria;
-// typedef CGAL::Mesh_constant_domain_field_3<Mesh_domain::R,
-// Mesh_domain::Index>
-//     Sizing_field;
+typedef CGAL::Mesh_constant_domain_field_3<Mesh_domain::R, Mesh_domain::Index>
+    Sizing_field;
 // // To avoid verbose function and named parameters call
 
 using namespace CGAL::parameters;
@@ -67,12 +66,11 @@ using namespace CGAL::parameters;
 #include <CGAL/ImageIO.h>
 
 #include "cgal.h"
-#include "xdmf.h"
 
 void cgal_make_mesh(const CGAL::Image_3 &image, std::string filename,
                     int cell_sizing) {
   // Domain
-  Mesh_domain domain(image);
+  Mesh_domain domain = Mesh_domain::create_labeled_image_mesh_domain(image);
 
   // Something to do with cell size...
   Sizing_field size(cell_sizing);
@@ -83,12 +81,14 @@ void cgal_make_mesh(const CGAL::Image_3 &image, std::string filename,
 
   // Meshing
   // FIXME: put all the parameters under user control
-  C3t3 c3t3 = CGAL::make_mesh_3<C3t3>(domain, criteria, lloyd(), odt(),
-                                      perturb(), exude(0.0, 0.0));
+  C3t3 c3t3 = CGAL::make_mesh_3<C3t3>(domain, criteria);
 
   // Output
   std::stringstream medit_stream;
   c3t3.output_to_medit(medit_stream);
 
-  medit_to_xdmf(medit_stream, filename);
+  std::ofstream outFile;
+  outFile.open(filename);
+  outFile << medit_stream.str();
+  outFile.close();
 }
